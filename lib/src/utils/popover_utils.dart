@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../popover_direction.dart';
 import 'utils.dart';
 
-class PopoverUtils {
-  PopoverUtils._();
-
+abstract class PopoverUtils {
   static PopoverDirection popoverDirection(
     Rect? attachRect,
     Size size,
@@ -32,7 +30,7 @@ class PopoverUtils {
             ? PopoverDirection.right
             : PopoverDirection.left;
       default:
-        return PopoverDirection.top;
+        return PopoverDirection.bottom;
     }
   }
 }

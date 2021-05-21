@@ -53,7 +53,7 @@ class PopoverExample extends StatelessWidget {
 }
 
 class Button extends StatelessWidget {
-  const Button({Key key}) : super(key: key);
+  const Button({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +70,10 @@ class Button extends StatelessWidget {
         onTap: () {
           showPopover(
             context: context,
+            transitionDuration: const Duration(milliseconds: 150),
             bodyBuilder: (context) => const ListItems(),
             onPop: () => print('Popover was popped!'),
-            direction: PopoverDirection.top,
+            direction: PopoverDirection.bottom,
             width: 200,
             height: 400,
             arrowHeight: 15,
@@ -85,7 +86,7 @@ class Button extends StatelessWidget {
 }
 
 class ListItems extends StatelessWidget {
-  const ListItems({Key key}) : super(key: key);
+  const ListItems({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +98,13 @@ class ListItems extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                print('GestureDetector was called on Entry A');
-                Navigator.of(context).pop();
+                Navigator.of(context)
+                  ..pop()
+                  ..push(
+                    MaterialPageRoute<SecondRoute>(
+                      builder: (context) => SecondRoute(),
+                    ),
+                  );
               },
               child: Container(
                 height: 50,
@@ -137,6 +143,24 @@ class ListItems extends StatelessWidget {
               child: const Center(child: Text('Entry F')),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Go back!'),
         ),
       ),
     );

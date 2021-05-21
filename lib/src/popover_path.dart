@@ -14,17 +14,22 @@ class PopoverPath {
   ) {
     final path = Path();
 
-    if (direction == PopoverDirection.top) {
-      _drawTopElement(path, arrowRect!, bodyRect);
-    } else if (direction == PopoverDirection.right) {
-      _drawRightElemet(path, arrowRect!, bodyRect);
-    } else if (direction == PopoverDirection.left) {
-      _drawLeftElement(path, arrowRect!, bodyRect);
+    if (arrowRect != null) {
+      if (direction == PopoverDirection.top) {
+        _drawTopElement(path, arrowRect, bodyRect);
+      } else if (direction == PopoverDirection.right) {
+        _drawRightElemet(path, arrowRect, bodyRect);
+      } else if (direction == PopoverDirection.left) {
+        _drawLeftElement(path, arrowRect, bodyRect);
+      } else {
+        _drawBottomElement(path, arrowRect, bodyRect);
+      }
+      path.close();
+      return path;
     } else {
-      _drawBottomElement(path, arrowRect!, bodyRect);
+      path.close();
+      return path;
     }
-    path.close();
-    return path;
   }
 
   void _drawBottomElement(Path path, Rect arrowRect, Rect bodyRect) {
@@ -38,7 +43,7 @@ class PopoverPath {
       bodyRect.top,
       bodyRect.right,
       bodyRect.top + radius,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.right, bodyRect.bottom - radius);
@@ -47,7 +52,7 @@ class PopoverPath {
       bodyRect.bottom,
       bodyRect.right - radius,
       bodyRect.bottom,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.left + radius, bodyRect.bottom);
@@ -56,7 +61,7 @@ class PopoverPath {
       bodyRect.bottom,
       bodyRect.left,
       bodyRect.bottom - radius,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.left, bodyRect.top + radius);
@@ -65,7 +70,7 @@ class PopoverPath {
       bodyRect.top,
       bodyRect.left + radius,
       bodyRect.top,
-      1.0,
+      1,
     );
   }
 
@@ -80,7 +85,7 @@ class PopoverPath {
       bodyRect.bottom,
       bodyRect.right - radius,
       bodyRect.bottom,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.left + radius, bodyRect.bottom);
@@ -89,7 +94,7 @@ class PopoverPath {
       bodyRect.bottom,
       bodyRect.left,
       bodyRect.bottom - radius,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.left, bodyRect.top + radius);
@@ -98,7 +103,7 @@ class PopoverPath {
       bodyRect.top,
       bodyRect.left + radius,
       bodyRect.top,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.right - radius, bodyRect.top);
@@ -107,7 +112,7 @@ class PopoverPath {
       bodyRect.top,
       bodyRect.right,
       bodyRect.top + radius,
-      1.0,
+      1,
     );
   }
 
@@ -122,7 +127,7 @@ class PopoverPath {
       bodyRect.bottom,
       bodyRect.left + radius,
       bodyRect.bottom,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.right - radius, bodyRect.bottom);
@@ -131,7 +136,7 @@ class PopoverPath {
       bodyRect.bottom,
       bodyRect.right,
       bodyRect.bottom - radius,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.right, bodyRect.top + radius);
@@ -140,7 +145,7 @@ class PopoverPath {
       bodyRect.top,
       bodyRect.right - radius,
       bodyRect.top,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.left + radius, bodyRect.top);
@@ -149,7 +154,7 @@ class PopoverPath {
       bodyRect.top,
       bodyRect.left,
       bodyRect.top + radius,
-      1.0,
+      1,
     );
   }
 
@@ -164,7 +169,7 @@ class PopoverPath {
       bodyRect.bottom,
       bodyRect.right,
       bodyRect.bottom - radius,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.right, bodyRect.top + radius);
@@ -173,7 +178,7 @@ class PopoverPath {
       bodyRect.top,
       bodyRect.right - radius,
       bodyRect.top,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.left + radius, bodyRect.top);
@@ -182,7 +187,7 @@ class PopoverPath {
       bodyRect.top,
       bodyRect.left,
       bodyRect.top + radius,
-      1.0,
+      1,
     );
 
     path.lineTo(bodyRect.left, bodyRect.bottom - radius);
@@ -191,7 +196,7 @@ class PopoverPath {
       bodyRect.bottom,
       bodyRect.left + radius,
       bodyRect.bottom,
-      1.0,
+      1,
     );
   }
 }

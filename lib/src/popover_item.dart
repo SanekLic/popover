@@ -17,9 +17,9 @@ class PopoverItem extends StatefulWidget {
   final double? arrowHeight;
   final BoxConstraints? constraints;
   final BuildContext context;
-  final double arrowDxOffset;
-  final double arrowDyOffset;
-  final double contentDyOffset;
+  final double? arrowDxOffset;
+  final double? arrowDyOffset;
+  final double? contentDyOffset;
 
   const PopoverItem({
     required this.child,
@@ -32,9 +32,9 @@ class PopoverItem extends StatefulWidget {
     this.arrowWidth,
     this.arrowHeight,
     this.constraints,
-    this.arrowDxOffset = 0,
-    this.arrowDyOffset = 0,
-    this.contentDyOffset = 0,
+    this.arrowDxOffset,
+    this.arrowDyOffset,
+    this.contentDyOffset,
     Key? key,
   }) : super(key: key);
 
@@ -52,9 +52,7 @@ class _PopoverItemState extends State<PopoverItem> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, __) {
-        _configureConstraints();
-        _configureRect();
-
+        _configure();
         return Stack(
           children: [
             PopoverPositionWidget(
@@ -84,6 +82,13 @@ class _PopoverItemState extends State<PopoverItem> {
     );
   }
 
+  void _configure() {
+    if (mounted) {
+      _configureConstraints();
+      _configureRect();
+    }
+  }
+
   void _configureConstraints() {
     BoxConstraints _constraints;
     if (widget.constraints != null) {
@@ -110,19 +115,28 @@ class _PopoverItemState extends State<PopoverItem> {
         maxWidth: Utils().screenHeight / 2,
       );
     }
-    constraints = _constraints.copyWith(
-      maxHeight: _constraints.maxHeight + widget.arrowHeight!,
-    );
+    if (widget.direction == PopoverDirection.top ||
+        widget.direction == PopoverDirection.bottom) {
+      constraints = _constraints.copyWith(
+        maxHeight: _constraints.maxHeight + widget.arrowHeight!,
+        maxWidth: _constraints.maxWidth,
+      );
+    } else {
+      constraints = _constraints.copyWith(
+        maxHeight: _constraints.maxHeight + widget.arrowHeight!,
+        maxWidth: _constraints.maxWidth + widget.arrowWidth!,
+      );
+    }
   }
 
   void _configureRect() {
     offset = BuildContextExtension.getWidgetLocalToGlobal(widget.context);
     bounds = BuildContextExtension.getWidgetBounds(widget.context);
     attachRect = Rect.fromLTWH(
-      offset.dx + widget.arrowDxOffset,
-      offset.dy + widget.arrowDyOffset,
+      offset.dx + (widget.arrowDxOffset ?? 0.0),
+      offset.dy + (widget.arrowDyOffset ?? 0.0),
       bounds.width,
-      bounds.height + widget.contentDyOffset,
+      bounds.height + (widget.contentDyOffset ?? 0.0),
     );
   }
 }
